@@ -37,3 +37,9 @@ class ResourceOut(ResourceBase):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class PaginatedResources(BaseModel):
+    items: list[ResourceOut]
+    total: int
+    page: int
