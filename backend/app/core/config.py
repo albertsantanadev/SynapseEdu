@@ -1,17 +1,17 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
+from typing import Optional
 
 class Settings(BaseSettings):
-    # Tipagem explícita: se DATABASE_URL não existir no .env,
-    # a aplicação falha ao subir, com um erro claro apontando o campo faltante.
     database_url: str
-    gemini_api_key: str
-    environment: str = "development"  # tem um default, então é opcional
+    
+    # Torne a chave do Gemini opcional (default None) para não bloquear o servidor
+    gemini_api_key: Optional[str] = None
+    
+    # Adicione a chave da Groq
+    groq_api_key: Optional[str] = None
 
-    # Isso instrui o Pydantic a procurar essas variáveis também num arquivo .env
-    # (e não só nas variáveis de ambiente reais do sistema operacional).
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    class Config:
+        env_file = ".env"
+        extra = "ignore" # Ignora variáveis extras no .env sem dar erro
 
-
-# Instância única, importada por qualquer outro módulo que precise de config.
 settings = Settings()

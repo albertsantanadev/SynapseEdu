@@ -43,3 +43,12 @@ class PaginatedResources(BaseModel):
     items: list[ResourceOut]
     total: int
     page: int
+
+class SmartAssistRequest(BaseModel):
+    title: str = Field(..., min_length=1)
+    type: ResourceType
+
+
+class SmartAssistResponse(BaseModel):
+    description: str
+    tags: list[str]
