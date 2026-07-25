@@ -8,7 +8,6 @@
 *.pem
 *.key
 !.env.example
-alembic.ini
 
 # ==========================================
 # Ambientes Virtuais e Arquivos do Python
