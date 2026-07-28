@@ -36,7 +36,13 @@ def generate_description(title: str, resource_type: str) -> dict:
         )
         
         content = response.choices[0].message.content
-        return json.loads(content)
+        data = json.loads(content)
+
+        # Garante que a lista de tags seja truncada para no máximo 3 itens
+        if isinstance(data, dict) and "tags" in data and isinstance(data["tags"], list):
+            data["tags"] = data["tags"][:3]
+
+        return data
 
     except Exception as exc:
         logger.error(f"[AI Service Error] Falha na comunicação: {exc}")
