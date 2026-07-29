@@ -39,7 +39,9 @@ def smart_assist(payload: SmartAssistRequest):
     try:
         result = generate_description(payload.title, payload.type.value)
     except AIServiceError:
-        raise HTTPException(status_code=502, detail="Não foi possível gerar sugestão da IA no momento")
+        raise HTTPException(
+            status_code=502, detail="Não foi possível gerar sugestão da IA no momento"
+        )
     return result
 
 
@@ -52,7 +54,9 @@ def get_resource(resource_id: uuid.UUID, db: Session = Depends(get_db)):
 
 
 @router.put("/{resource_id}", response_model=ResourceOut)
-def update_resource(resource_id: uuid.UUID, resource_in: ResourceUpdate, db: Session = Depends(get_db)):
+def update_resource(
+    resource_id: uuid.UUID, resource_in: ResourceUpdate, db: Session = Depends(get_db)
+):
     db_resource = crud.get_resource(db, resource_id)
     if db_resource is None:
         raise HTTPException(status_code=404, detail="Recurso não encontrado")

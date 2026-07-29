@@ -5,9 +5,11 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
+
 # Exceção customizada esperada pela sua rota resource.py
 class AIServiceError(Exception):
     """Exceção disparada quando ocorre uma falha na geração via IA."""
+
     pass
 
 
@@ -20,21 +22,21 @@ SYSTEM_PROMPT = (
 
 def generate_description(title: str, resource_type: str) -> dict:
     user_prompt = f'Título: "{title}"\nTipo: {resource_type}'
-    
+
     try:
         # Usa a chave da Groq configurada
         client = Groq(api_key=settings.groq_api_key)
-        
+
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt}
+                {"role": "user", "content": user_prompt},
             ],
             response_format={"type": "json_object"},
             temperature=0.4,
         )
-        
+
         content = response.choices[0].message.content
         data = json.loads(content)
 

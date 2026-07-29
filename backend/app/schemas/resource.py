@@ -44,6 +44,7 @@ class PaginatedResources(BaseModel):
     total: int
     page: int
 
+
 class SmartAssistRequest(BaseModel):
     title: str = Field(..., min_length=1)
     type: ResourceType

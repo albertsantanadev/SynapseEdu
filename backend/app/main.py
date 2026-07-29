@@ -29,14 +29,14 @@ origins = [
 # Lê origens do .env caso configurado
 raw_origins = os.getenv("BACKEND_CORS_ORIGINS")
 if raw_origins:
-    clean_raw = raw_origins.strip().strip('"\'')
+    clean_raw = raw_origins.strip().strip("\"'")
     if clean_raw.startswith("["):
         try:
             origins.extend(json.loads(clean_raw))
         except json.JSONDecodeError:
             pass
     else:
-        parsed = [o.strip(' "\'') for o in clean_raw.split(",") if o.strip()]
+        parsed = [o.strip(" \"'") for o in clean_raw.split(",") if o.strip()]
         origins.extend(parsed)
 
 app.add_middleware(
