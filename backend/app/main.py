@@ -8,6 +8,7 @@ from sqlalchemy import text
 from app.core.logging_config import setup_logging
 from app.db.database import engine
 from app.routers import resource
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 setup_logging()
@@ -16,6 +17,17 @@ app = FastAPI(
     title="SynapseEdu API",
     description="Hub Inteligente de Recursos Educacionais",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://seu-frontend.vercel.app",  # atualize com a URL real após o deploy
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Origens autorizadas por padrão
