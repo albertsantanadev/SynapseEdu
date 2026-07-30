@@ -4,11 +4,9 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
-
 from app.core.logging_config import setup_logging
 from app.db.database import engine
 from app.routers import resource
-from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 setup_logging()
