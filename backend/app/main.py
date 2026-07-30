@@ -17,26 +17,13 @@ app = FastAPI(
     version="0.1.0",
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-        "https://synapse-edu-one.vercel.app",  # URL do deploy
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Origens autorizadas por padrão
+# Origens autorizadas para acessar a API
 origins = [
+    "https://synapse-edu-one.vercel.app",
     "http://localhost:5173",
+    "http://localhost:5174",
     "http://127.0.0.1:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5174",
 ]
 
 # Lê origens do .env caso configurado
@@ -52,6 +39,7 @@ if raw_origins:
         parsed = [o.strip(" \"'") for o in clean_raw.split(",") if o.strip()]
         origins.extend(parsed)
 
+# Registra o middleware do CORS UMA ÚNICA VEZ com a lista completa
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
