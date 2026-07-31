@@ -17,7 +17,7 @@ app = FastAPI(
     version="0.1.0",
 )
 
-# Origens autorizadas para acessar a API
+# Origens autorizadas por padrão
 origins = [
     "https://synapse-edu-one.vercel.app",
     "http://localhost:5173",
@@ -39,7 +39,7 @@ if raw_origins:
         parsed = [o.strip(" \"'") for o in clean_raw.split(",") if o.strip()]
         origins.extend(parsed)
 
-# Registra o middleware do CORS UMA ÚNICA VEZ com a lista completa
+# Registra o middleware do CORS com a lista completa de origens
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
